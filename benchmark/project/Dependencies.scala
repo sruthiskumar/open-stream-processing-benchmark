@@ -14,7 +14,7 @@ object Dependencies {
 
     val dropwizardMetrics = "3.2.2"
 
-    val flink = "1.9.1"
+    val flink = "1.12-SNAPSHOT"
     val flinkStreamingContrib = "1.4.2"
     val flinkSpector = "0.5"
 
@@ -36,8 +36,8 @@ object Dependencies {
     val spark = "2.4.1"
     val sparkTestingBase = "2.4.0_0.11.0"
     val storm = "1.1.1"
-    val scalaBinary = "2.11"
-    val scala = "2.11.8"
+    val scalaBinary = "2.13"
+    val scala = "2.13.0"
     val slf4j = "1.7.7"
     val supercsv = "2.1.0"
 
@@ -93,39 +93,7 @@ object Dependencies {
     sys.props += "packaging.type" -> "jar"
     ()
   }
-  val kafkaDependencies: Seq[ModuleID] = commonDependencies ++ Seq(
-    "org.apache.kafka" % "kafka-clients" % Versions.kafkaStreams,
-    "org.apache.kafka" % "kafka-streams" % Versions.kafkaStreams,
-    "org.apache.kafka" %% "kafka-streams-scala" % Versions.kafkaStreams,
-    "org.apache.kafka" % "kafka-streams-test-utils" % Versions.kafkaStreams % "test"
-  ).map(_.exclude("org.apache.zookeeper", "zookeeper")
-    .exclude("javax.jms", "jms")
-    .exclude("com.sun.jdmk", "jmxtools")
-    .exclude("com.sun.jmx", "jmxri")
-    .exclude("log4j", "log4j")
-    .exclude("org.slf4j", "slf4j-log4j12"))
-
   lazy val excludeJpountz = ExclusionRule(organization = "net.jpountz.lz4", name = "lz4")
-  val sparkDependencies: Seq[ModuleID] =
-    commonDependencies.map(_.excludeAll(excludeJpountz)) ++ Seq(
-      "org.apache.spark" %% "spark-core" % Versions.spark % "provided",
-      "org.apache.spark" %% "spark-sql" % Versions.spark % "provided",
-      "org.apache.spark" %% "spark-streaming" % Versions.spark % "provided",
-
-      "org.apache.spark" %% "spark-streaming-kafka-0-10" % Versions.spark,
-      "org.apache.spark" %% "spark-sql-kafka-0-10" % Versions.spark,
-      "org.apache.kafka" % "kafka-clients" % Versions.kafka excludeAll (excludeJpountz),
-      "io.netty" % "netty-all" % "4.1.17.Final" excludeAll (excludeJpountz),
-
-      "org.apache.kafka" %% s"kafka" % Versions.kafka % "test" classifier "test" excludeAll (excludeJpountz),
-      "com.holdenkarau" %% "spark-testing-base" % Versions.sparkTestingBase % "test" excludeAll (excludeJpountz),
-      "org.apache.spark" %% "spark-hive" % Versions.spark % "test")
-      .map(_.exclude("org.apache.zookeeper", "zookeeper")
-        .exclude("javax.jms", "jms")
-        .exclude("com.sun.jdmk", "jmxtools")
-        .exclude("com.sun.jmx", "jmxri")
-        .exclude("org.slf4j", "slf4j-log4j12")) ++
-      Seq("net.jpountz.lz4" % "lz4" % "1.3.0")
 
   val jacksonDependencyOverrides = Set("com.fasterxml.jackson.core" % "jackson-core" % "2.6.7",
     "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.7",

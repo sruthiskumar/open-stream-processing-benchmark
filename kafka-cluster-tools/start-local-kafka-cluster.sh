@@ -1,5 +1,5 @@
 #! /bin/bash
-export KAFKA_HOME=~/opt/kafka_2.11-2.1.0
+export KAFKA_HOME=/Users/sruthi/Documents/Thesis/kafka_2.11-2.1.0
 
 sudo service zookeeper start
 
